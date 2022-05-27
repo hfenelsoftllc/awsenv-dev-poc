@@ -19,3 +19,11 @@ resource "aws_subnet" "lakay_public_subnet" {
   }
 }
 
+resource "aws_internet_gateway" "lakay_igw" {
+  vpc_id = aws_vpc.lakay_vpc.id
+
+  tags = {
+    Name = "lakay-igw"
+  }
+}
+
