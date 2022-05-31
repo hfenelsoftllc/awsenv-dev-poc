@@ -31,7 +31,7 @@ resource "aws_route_table" "lakay_rt_public" {
   vpc_id = aws_vpc.lakay_vpc.id
 
   tags = {
-    Name = "dev_public_rt"
+    Name = "lakay_devrt_pub"
   }
 }
 
@@ -44,4 +44,28 @@ resource "aws_route" "default_route" {
 resource "aws_route_table_association" "lakay_pub_assoc" {
   subnet_id      = aws_subnet.lakay_public_subnet.id
   route_table_id = aws_route_table.lakay_rt_public.id
+}
+
+resource "aws_security_group" "lakay_dev_sg" {
+  name        = "lakay_dev_secg"
+  description = "Dev Security group for lakay"
+  vpc_id      = aws_vpc.lakay_vpc.id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "lakay_dev_sg"
+  }
 }
